@@ -1,0 +1,43 @@
+name: Windows CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16 # Specify your desired Node.js version
+
+    # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+    # Run tests
+    - name: Run tests
+      run: npm test
+
+    # Build the project
+    - name: Build the project
+      run: npm run build
+
+    # Upload build artifacts (optional)
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-output
+        path: build/ # Adjust path based on your build output location
